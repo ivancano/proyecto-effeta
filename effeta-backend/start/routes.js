@@ -16,4 +16,9 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
 
-Route.on('/').render('welcome')
+Route.group(() => {
+
+    Route.post('users/create-roles', 'UserController.createRoles');
+    Route.post('users/register', 'UserController.register');
+    Route.post('users/login', 'UserController.login');
+}).prefix('api/v1')
