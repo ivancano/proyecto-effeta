@@ -37,6 +37,20 @@ class UserController {
         response.json(token);
     }
 
+    async updatePassword ({ request, auth }) {
+        const payload = request.only(['old_password', 'password', 'password_confirmation']);
+        const user = auth.user;
+        await Persona.updatePassword(user, payload);
+        response.json(user);
+    }
+
+    async updatePasswordByToken ({ request, params }) {
+        const token = params.token;
+        const payload = request.only(['password', 'password_confirmation']);
+        const user = await Persona.updatePasswordByToken(token, payload);
+        response.json(user);
+    }
+
 }
 
 module.exports = UserController
