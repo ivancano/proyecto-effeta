@@ -31,6 +31,18 @@ Route.group(() => {
     Route.put('contributors/:id', 'ContributorController.update');
     Route.delete('contributors/:id', 'ContributorController.delete');
 
+    Route.get('contributions', 'ContributionController.index');
+    Route.post('contributions', 'ContributionController.store');
+    Route.get('contributions/:id', 'ContributionController.show');
+    Route.put('contributions/:id', 'ContributionController.update');
+    Route.delete('contributions/:id', 'ContributionController.delete');
+
+    Route.get('payments', 'PaymentController.index');
+    Route.post('payments', 'PaymentController.store');
+    Route.get('payments/:id', 'PaymentController.show');
+    Route.put('payments/:id', 'PaymentController.update');
+    Route.delete('payments/:id', 'PaymentController.delete');
+
 
     Route.get('dummy-data', async ({ request, response }) => {
         var result = []

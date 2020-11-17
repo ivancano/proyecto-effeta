@@ -22,7 +22,7 @@ class ContributorController {
         const user = await User.find(body.user_id);
         await contributor.user().associate(user);
 
-        response.json(contributors);
+        response.json(contributor);
     }
 
     async show ({ request, params, response }) {
