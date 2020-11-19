@@ -5,6 +5,7 @@ import Button from '@material-ui/core/Button';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import { useUserStore } from '../../context/UserContext';
+import UserService from '../../services/User';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,18 +30,26 @@ const useStyles = makeStyles((theme) => ({
 const Login = (props) => {
   const classes = useStyles();
 
-  const [email, setEmail] = useState('user@test.com');
-  const [password, setPassword] = useState('user123');
+  const [email, setEmail] = useState('administrativo1@effeta.com');
+  const [password, setPassword] = useState('123456');
   const [remember, setRemember] = useState(false);
   const store = useUserStore();
 
   const submit = () => {
-    if (email === 'user@test.com' && password === 'user123') {
+    UserService.login(email, password)
+    .then(data => {
+      store.setUser({ email, password });
+      props.history.push('/Menu');
+    })
+    .catch(err => {
+      alert(err);
+    });
+    /*if (email === 'user@test.com' && password === 'user123') {
       store.setUser({ email, password });
       props.history.push('/Menu');
     } else {
       alert('Usuario y password invalidos!');
-    }
+    }*/
   }
 
   const onEmailChange = (event) => {

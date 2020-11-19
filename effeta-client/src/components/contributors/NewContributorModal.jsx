@@ -1,5 +1,7 @@
 import React, { useReducer, useState } from 'react';
 import { Button, makeStyles, Modal, TextField, Typography } from '@material-ui/core';
+import ContributorService from '../../services/Contributor';
+import UserService from '../../services/User';
 
 const useStyles = makeStyles({
   root: {
@@ -43,10 +45,10 @@ const useStyles = makeStyles({
 
 const initialState = {
   name: '',
-  lastName: '',
+  lastname: '',
   address: '',
   email: '',
-  mobile: '',
+  dni: '',
   phone: ''
 }
 
@@ -58,14 +60,14 @@ function reducer(state, action) {
   switch (action.type) {
     case 'name':
       return { ...state, name: action.payload };
-    case 'lastName':
-      return { ...state, lastName: action.payload };
+    case 'lastname':
+      return { ...state, lastname: action.payload };
     case 'address':
       return { ...state, address: action.payload };
     case 'email':
       return { ...state, email: action.payload };
-    case 'mobile':
-      return { ...state, mobile: action.payload };
+    case 'dni':
+      return { ...state, dni: action.payload };
     case 'phone':
       return { ...state, phone: action.payload };
     default:
@@ -81,9 +83,25 @@ const NewContributorModal = ({open, onClose, onAddMember}) => {
   }
 
   function addMember() {
-    const { name, lastName, address, email, mobile, phone } = state;
-    onAddMember({name, lastName, address, email, mobile, phone});
-    onClose();
+    const { name, lastname, address, email, dni, phone } = state;
+    UserService.register(email, dni).then(res => {
+      ContributorService.store({
+        name: name,
+        lastname: lastname,
+        address: address,
+        email: email,
+        dni: dni,
+        phone: phone,
+        userId: res.data.id
+      }).then(res => {
+        onAddMember({name, lastname, address, email, dni, phone});
+        onClose();
+      }).catch(err => {
+        alert(err);
+      });
+    }).catch(err => {
+      alert(err);
+    });
   }
 
   const classes = useStyles();
@@ -101,7 +119,7 @@ const NewContributorModal = ({open, onClose, onAddMember}) => {
         <div className={classes.body}>
           <div className={classes.inputsContainer}>
             <TextField id="name" label="Nombre" value={state.name} onChange={onInputChange} variant="outlined" className={classes.input} />
-            <TextField id="lastName" label="Apellido" value={state.lastName} onChange={onInputChange} variant="outlined" className={classes.input} />
+            <TextField id="lastname" label="Apellido" value={state.lastname} onChange={onInputChange} variant="outlined" className={classes.input} />
           </div>
           <div className={classes.inputsContainer}>
             <TextField id="address" label="Dirección" value={state.address} onChange={onInputChange} variant="outlined" className={classes.input} />
@@ -109,7 +127,7 @@ const NewContributorModal = ({open, onClose, onAddMember}) => {
           </div>
           <div className={classes.inputsContainer}>
             <TextField id="phone" label="Teléfono" value={state.phone} onChange={onInputChange} variant="outlined" className={classes.input} />
-            <TextField id="mobile" label="Celular" value={state.mobile} onChange={onInputChange} variant="outlined" className={classes.input} />
+            <TextField id="dni" label="DNI" value={state.dni} onChange={onInputChange} variant="outlined" className={classes.input} />
           </div>
         </div>
         <div className={classes.buttonsContainer}>

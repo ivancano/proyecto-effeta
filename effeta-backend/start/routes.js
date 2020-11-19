@@ -23,7 +23,7 @@ Route.group(() => {
 
     Route.post('users/create-roles', 'UserController.createRoles');
     Route.post('users/register', 'UserController.register');
-    Route.post('users/login', 'UserController.login');
+    Route.post('users/login', 'UserController.login').middleware('guest');
 
     Route.get('contributors', 'ContributorController.index');
     Route.post('contributors', 'ContributorController.store');

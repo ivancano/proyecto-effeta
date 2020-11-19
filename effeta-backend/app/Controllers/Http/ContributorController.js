@@ -6,7 +6,7 @@ const User = use('App/Models/User');
 class ContributorController {
 
     async index ({ request, response }) {
-        const contributors = await Contributor.all();
+        const contributors = await Contributor.query().with('user').fetch();
         response.json(contributors);
     }
 
@@ -16,7 +16,8 @@ class ContributorController {
         contributor.name = body.name;
         contributor.lastname = body.lastname;
         contributor.dni = body.dni;
-        contributor.type = body.type;
+        contributor.address = body.address;
+        contributor.phone = body.phone;
         await contributor.save();
 
         const user = await User.find(body.user_id);
@@ -36,7 +37,8 @@ class ContributorController {
         contributor.name = body.name;
         contributor.lastname = body.lastname;
         contributor.dni = body.dni;
-        contributor.type = body.type;
+        contributor.address = body.address;
+        contributor.phone = body.phone;
         await contributor.save();
 
         const user = await User.find(body.user_id);

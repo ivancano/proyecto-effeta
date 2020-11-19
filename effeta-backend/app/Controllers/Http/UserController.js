@@ -11,7 +11,7 @@ class UserController {
         const body = request.post()
         const payload = request.only(['email', 'password', 'password_confirmation', 'username']);
         const user = await Persona.register(payload);
-        await user.roles().attach([body.role]);
+        await user.roles().attach([2]);
         response.json(user);
     }
 
