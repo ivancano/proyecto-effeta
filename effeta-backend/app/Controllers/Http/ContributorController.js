@@ -48,6 +48,7 @@ class ContributorController {
         user.username = body.username;
         await user.save();
 
+        contributor.user = user;
         response.json(contributor);
     }
 

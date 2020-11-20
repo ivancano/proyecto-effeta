@@ -35,6 +35,7 @@ import { useEffect } from 'react';
 import UserService from '../../services/User';
 import DeleteContributorDialog from './DeleteContributorDialog';
 import ContributionsHistoryModal from '../contributions/ContributionsHistoryModal';
+import ModifyContributorModal from './ModifyContributorModal';
 
 const useStyles = makeStyles({
   header: {
@@ -51,6 +52,7 @@ const Contributors = observer(() => {
   const [showAddContributor, setShowAddContributor] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [showContributionsModal, setShowContributionsModal] = useState(false);
+  const [showModifyModal, setShowModifyModal] = useState(false);
   const [selectedContributor, setSelectedContributor] = useState({});
   const classes = useStyles();
   const store = useUserStore();
@@ -102,11 +104,38 @@ const Contributors = observer(() => {
     setShowContributionsModal(false);
   }
 
+  function openModifyModal(contributor) {
+    setSelectedContributor(contributor);
+    setShowModifyModal(true);
+  }
+
+  function closeModifyModal() {
+    setShowModifyModal(false);
+  }
+
   function confirmDeleteContributor(contributorId) {
     ContributorService.delete(contributorId)
       .then(() => {
         store.removeMember(contributorId);
       }).catch(err => alert(err));
+  }
+
+  function modifyMember({id, name, lastname, address, email, dni, phone, type}) {
+    console.log({id, name, lastname, address, email, dni, phone, type})
+    ContributorService.update({
+      id,
+      name,
+      lastname,
+      address,
+      email,
+      dni,
+      phone,
+      type
+    }).then(res => {
+      store.modifyMember(res.data);
+    }).catch(err => {
+      alert(err);
+    });
   }
 
   function addMember({name, lastname, address, email, dni, phone, type}) {
@@ -159,6 +188,12 @@ const Contributors = observer(() => {
         handleClose={closeContributionsModal}
         contributor={selectedContributor}
       />
+      <ModifyContributorModal
+        open={showModifyModal}
+        onClose={closeModifyModal}
+        contributor={selectedContributor}
+        onModifyMember={modifyMember}
+      />
       <div className={classes.header}>
         <Typography variant="h5" component="h2">
           Aportantes
@@ -209,7 +244,7 @@ const Contributors = observer(() => {
               },
               tooltip: '',
               onClick: (event, rowData) => {
-                // Do save operation
+                openModifyModal(rowData);
               }
             },
             {

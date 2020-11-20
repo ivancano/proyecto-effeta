@@ -34,6 +34,27 @@ const ContributorService = {
       });
     });
   },
+  update: (params) => {
+    return new Promise((resolve, reject) => {
+      axios.put(Base.url + "api/v1/contributors/" + params.id,
+      {
+        name: params.name,
+        lastname: params.lastname,
+        email: params.email,
+        dni: params.dni,
+        phone: params.phone,
+        address: params.address,
+        user_id: params.id,
+        type: params.type
+      })
+      .then(data => {
+        resolve(data);
+      })
+      .catch(err => {
+        reject(err);
+      });
+    });
+  },
   delete: (id) => {
     return new Promise((resolve, reject) => {
       axios.delete(Base.url + "api/v1/contributors/" + id)
