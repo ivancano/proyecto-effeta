@@ -163,7 +163,7 @@ const Contributors = observer(() => {
             { title: 'Nombre', field: 'name' },
             { title: 'Apellido', field: 'lastname' },
             { title: 'DNI', field: 'dni' },
-            { title: 'Email', field: 'email' },
+            { title: 'Email', field: 'user.email' },
             { title: 'Dirección', field: 'address' },
             { title: 'Teléfono', field: 'phone' },
           ]}
