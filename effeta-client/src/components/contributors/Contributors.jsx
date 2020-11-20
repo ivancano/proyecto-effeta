@@ -34,6 +34,7 @@ import ContributorService from '../../services/Contributor';
 import { useEffect } from 'react';
 import UserService from '../../services/User';
 import DeleteContributorDialog from './DeleteContributorDialog';
+import ContributionsHistoryModal from '../contributions/ContributionsHistoryModal';
 
 const useStyles = makeStyles({
   header: {
@@ -49,6 +50,7 @@ const useStyles = makeStyles({
 const Contributors = observer(() => {
   const [showAddContributor, setShowAddContributor] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [showContributionsModal, setShowContributionsModal] = useState(false);
   const [selectedContributor, setSelectedContributor] = useState({});
   const classes = useStyles();
   const store = useUserStore();
@@ -89,6 +91,15 @@ const Contributors = observer(() => {
 
   function closeDeleteDialog() {
     setShowDeleteDialog(false);
+  }
+
+  function openContributionsModal(contributor) {
+    setSelectedContributor(contributor);
+    setShowContributionsModal(true);
+  }
+
+  function closeContributionsModal() {
+    setShowContributionsModal(false);
   }
 
   function confirmDeleteContributor(contributorId) {
@@ -142,6 +153,11 @@ const Contributors = observer(() => {
         contributor={selectedContributor}
         handleClose={closeDeleteDialog}
         handleConfirm={confirmDeleteContributor}
+      />
+      <ContributionsHistoryModal
+        open={showContributionsModal}
+        handleClose={closeContributionsModal}
+        contributor={selectedContributor}
       />
       <div className={classes.header}>
         <Typography variant="h5" component="h2">
@@ -204,7 +220,7 @@ const Contributors = observer(() => {
               },
               tooltip: '',
               onClick: (event, rowData) => {
-                // Do save operation
+                openContributionsModal(rowData);
               }
             },
             {
@@ -220,7 +236,6 @@ const Contributors = observer(() => {
             }
           ]}
       />
-      
     </section>
   );
 })
