@@ -1,4 +1,4 @@
-import React, { useReducer} from 'react';
+import React, { useEffect, useReducer} from 'react';
 import { Button, FormControl, makeStyles, MenuItem, Modal, Select, TextField, Typography } from '@material-ui/core';
 
 const useStyles = makeStyles({
@@ -71,6 +71,8 @@ function reducer(state, action) {
       return { ...state, phone: action.payload };
     case 'type':
       return { ...state, type: action.payload };
+    case 'reset':
+      return { ...initialState };
     default:
       throw new Error();
   }
@@ -79,6 +81,10 @@ function reducer(state, action) {
 const NewContributorModal = ({open, onClose, onAddMember}) => {
   const [state, dispatch] = useReducer(reducer, initialState, init);
 
+  function clearState() {
+    dispatch({type: 'reset'});
+  }
+
   function onInputChange(e) {
     dispatch({ type: e.target.id, payload: e.target.value });
   }
@@ -86,6 +92,7 @@ const NewContributorModal = ({open, onClose, onAddMember}) => {
   function addMember() {
     const { name, lastname, address, email, dni, phone, type } = state;
     onAddMember({name, lastname, address, email, dni, phone, type});
+    clearState();
   }
 
   function onSelection(e) {
@@ -94,10 +101,15 @@ const NewContributorModal = ({open, onClose, onAddMember}) => {
 
   const classes = useStyles();
 
+  function handleClose() {
+    clearState();
+    onClose();
+  }
+
   return (
     <Modal
       open={open}
-      onClose={onClose}
+      onClose={handleClose}
       className={classes.root}
     >
       <section className={classes.container}>
