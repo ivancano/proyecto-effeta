@@ -13,6 +13,8 @@ class ContributorsSchema extends Schema {
       table.string('lastname', 255).notNullable()
       table.string('dni', 255).notNullable()
       table.integer('type').notNullable()
+      table.string('address').notNullable()
+      table.string('phone').notNullable()
       table.timestamps()
     })
   }

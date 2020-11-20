@@ -1,7 +1,3 @@
-function createData(id, name, lastname, email, address, phone, dni) {
-  return { id, name, lastname, email, address, phone, dni };
-}
-
 const members = [];
 
 export function createUserStore() {
@@ -14,11 +10,14 @@ export function createUserStore() {
     logoutUser() {
       this.user = {};
     },
+    setMembers(loadedMembers) {
+      this.members = loadedMembers;
+    },
     addMember(member) {
       this.members = [...this.members, member];
     },
     removeMember(newMember) {
-      this.members = this.members.filter(member => member.id !== newMember.id);
+      this.members = this.members.filter(member => member.userId !== newMember.userId);
     }
   }
 }

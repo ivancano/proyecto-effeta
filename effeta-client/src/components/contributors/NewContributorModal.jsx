@@ -1,5 +1,5 @@
 import React, { useReducer, useState } from 'react';
-import { Button, makeStyles, Modal, TextField, Typography } from '@material-ui/core';
+import { Button, FormControl, InputLabel, makeStyles, MenuItem, Modal, Select, TextField, Typography } from '@material-ui/core';
 import ContributorService from '../../services/Contributor';
 import UserService from '../../services/User';
 
@@ -49,7 +49,8 @@ const initialState = {
   address: '',
   email: '',
   dni: '',
-  phone: ''
+  phone: '',
+  type: 1
 }
 
 function init() {
@@ -70,6 +71,8 @@ function reducer(state, action) {
       return { ...state, dni: action.payload };
     case 'phone':
       return { ...state, phone: action.payload };
+    case 'type':
+      return { ...state, type: action.payload };
     default:
       throw new Error();
   }
@@ -83,25 +86,12 @@ const NewContributorModal = ({open, onClose, onAddMember}) => {
   }
 
   function addMember() {
-    const { name, lastname, address, email, dni, phone } = state;
-    UserService.register(email, dni).then(res => {
-      ContributorService.store({
-        name: name,
-        lastname: lastname,
-        address: address,
-        email: email,
-        dni: dni,
-        phone: phone,
-        userId: res.data.id
-      }).then(res => {
-        onAddMember({name, lastname, address, email, dni, phone});
-        onClose();
-      }).catch(err => {
-        alert(err);
-      });
-    }).catch(err => {
-      alert(err);
-    });
+    const { name, lastname, address, email, dni, phone, type } = state;
+    onAddMember({name, lastname, address, email, dni, phone, type});
+  }
+
+  function onSelection(e) {
+    dispatch({type: 'type', payload: e.target.value});
   }
 
   const classes = useStyles();
@@ -129,6 +119,20 @@ const NewContributorModal = ({open, onClose, onAddMember}) => {
             <TextField id="phone" label="Teléfono" value={state.phone} onChange={onInputChange} variant="outlined" className={classes.input} />
             <TextField id="dni" label="DNI" value={state.dni} onChange={onInputChange} variant="outlined" className={classes.input} />
           </div>
+          <FormControl variant="outlined" className={classes.inputsContainer}>
+            <Select
+              labelId="type-select-label"
+              id="type-simple-select"
+              value={state.type}
+              onChange={onSelection}
+              label="Tipo"
+              className={classes.input}
+            >
+              <MenuItem value={1}>Padrino</MenuItem>
+              <MenuItem value={2}>Alumno</MenuItem>
+              <MenuItem value={3}>No registrado</MenuItem>
+            </Select>
+          </FormControl>
         </div>
         <div className={classes.buttonsContainer}>
           <Button variant="contained" color="primary" onClick={addMember}>Guardar</Button>

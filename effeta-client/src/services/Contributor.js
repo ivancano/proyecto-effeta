@@ -4,15 +4,16 @@ import Base from "./Base";
 const ContributorService = {
   store: (params) => {
     return new Promise((resolve, reject) => {
-      axios.post(Base.url + "api/v1/contributors", 
+      axios.post(Base.url + "api/v1/contributors",
       {
-        name: params.name, 
+        name: params.name,
         lastname: params.lastname,
         email: params.email,
         dni: params.dni,
         phone: params.phone,
         address: params.address,
-        user_id: params.userId
+        user_id: params.userId,
+        type: params.type
       })
       .then(data => {
         resolve(data);

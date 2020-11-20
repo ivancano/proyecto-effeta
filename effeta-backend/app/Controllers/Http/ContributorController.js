@@ -18,6 +18,7 @@ class ContributorController {
         contributor.dni = body.dni;
         contributor.address = body.address;
         contributor.phone = body.phone;
+        contributor.type = body.type;
         await contributor.save();
 
         const user = await User.find(body.user_id);
@@ -39,6 +40,7 @@ class ContributorController {
         contributor.dni = body.dni;
         contributor.address = body.address;
         contributor.phone = body.phone;
+        contributor.type = body.type;
         await contributor.save();
 
         const user = await User.find(body.user_id);

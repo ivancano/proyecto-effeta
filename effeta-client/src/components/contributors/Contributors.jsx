@@ -32,6 +32,7 @@ import { useUserStore } from '../../context/UserContext';
 import NewContributorModal from './NewContributorModal';
 import ContributorService from '../../services/Contributor';
 import { useEffect } from 'react';
+import UserService from '../../services/User';
 
 const useStyles = makeStyles({
   header: {
@@ -69,23 +70,6 @@ const Contributors = observer(() => {
     ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />)
   };
 
-  function loadMembers() {
-    ContributorService.list()
-    .then(res => {
-      for (let index = 0; index < res.data.length; index++) {
-        const element = res.data[index];
-        store.addMember({
-          id: element.id,
-          name: element.name, 
-          lastname: element.lastname, 
-          address: element.address, 
-          email: element.user.email, 
-          dni: element.dni, 
-          phone: element.phone
-        });
-      }
-    });
-  }
 
   function closeAddContributor() {
     setShowAddContributor(false);
@@ -95,16 +79,36 @@ const Contributors = observer(() => {
     setShowAddContributor(true);
   }
 
-  function addMember(member) {
-    store.addMember(member);
+  function addMember({name, lastname, address, email, dni, phone, type}) {
+    UserService.register(email, dni).then(res => {
+      ContributorService.store({
+        name,
+        lastname,
+        address,
+        email,
+        dni,
+        phone,
+        type,
+        userId: res.data.id
+      }).then(res => {
+        store.addMember(res.data);
+      }).catch(err => {
+        alert(err);
+      });
+    }).catch(err => {
+      alert(err);
+    });
   }
 
-  useEffect(
-    () => {
-      loadMembers();
-    },
-    store.members
-  )
+  useEffect(() => {
+    function loadMembers() {
+      ContributorService.list()
+      .then(res => {
+        store.setMembers(res.data);
+      });
+    }
+    loadMembers()
+  }, []);
 
   return (
     <section style={{width: '100%'}}>
@@ -123,7 +127,6 @@ const Contributors = observer(() => {
           Nuevo Aportante
         </Button>
       </div>
-      
       <MaterialTable
           icons={tableIcons}
           columns={[
