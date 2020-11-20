@@ -19,7 +19,7 @@ const ContributorService = {
         resolve(data);
       })
       .catch(err => {
-        reject("Error");
+        reject(err);
       });
     });
   },
@@ -30,9 +30,20 @@ const ContributorService = {
         resolve(data);
       })
       .catch(err => {
-        reject("Error");
+        reject(err);
       });
     });
+  },
+  delete: (id) => {
+    return new Promise((resolve, reject) => {
+      axios.delete(Base.url + "api/v1/contributors/" + id)
+      .then((data) => {
+        resolve(data);
+      })
+      .catch(err => {
+        reject(err);
+      })
+    })
   }
 }
 

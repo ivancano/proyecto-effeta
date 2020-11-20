@@ -16,8 +16,8 @@ export function createUserStore() {
     addMember(member) {
       this.members = [...this.members, member];
     },
-    removeMember(newMember) {
-      this.members = this.members.filter(member => member.userId !== newMember.userId);
+    removeMember(memberId) {
+      this.members = this.members.filter(member => member.id !== memberId);
     }
   }
 }

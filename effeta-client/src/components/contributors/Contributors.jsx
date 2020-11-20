@@ -33,6 +33,7 @@ import NewContributorModal from './NewContributorModal';
 import ContributorService from '../../services/Contributor';
 import { useEffect } from 'react';
 import UserService from '../../services/User';
+import DeleteContributorDialog from './DeleteContributorDialog';
 
 const useStyles = makeStyles({
   header: {
@@ -47,6 +48,8 @@ const useStyles = makeStyles({
 
 const Contributors = observer(() => {
   const [showAddContributor, setShowAddContributor] = useState(false);
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [selectedContributor, setSelectedContributor] = useState({});
   const classes = useStyles();
   const store = useUserStore();
 
@@ -79,6 +82,22 @@ const Contributors = observer(() => {
     setShowAddContributor(true);
   }
 
+  function openDeleteDialog(contributor) {
+    setSelectedContributor(contributor);
+    setShowDeleteDialog(true);
+  }
+
+  function closeDeleteDialog() {
+    setShowDeleteDialog(false);
+  }
+
+  function confirmDeleteContributor(contributorId) {
+    ContributorService.delete(contributorId)
+      .then(() => {
+        store.removeMember(contributorId);
+      }).catch(err => alert(err));
+  }
+
   function addMember({name, lastname, address, email, dni, phone, type}) {
     UserService.register(email, dni).then(res => {
       ContributorService.store({
@@ -92,6 +111,7 @@ const Contributors = observer(() => {
         userId: res.data.id
       }).then(res => {
         store.addMember(res.data);
+        setShowAddContributor(false);
       }).catch(err => {
         alert(err);
       });
@@ -112,7 +132,17 @@ const Contributors = observer(() => {
 
   return (
     <section style={{width: '100%'}}>
-      <NewContributorModal open={showAddContributor} onClose={closeAddContributor} onAddMember={addMember}/>
+      <NewContributorModal
+        open={showAddContributor}
+        onClose={closeAddContributor}
+        onAddMember={addMember}
+      />
+      <DeleteContributorDialog
+        open={showDeleteDialog}
+        contributor={selectedContributor}
+        handleClose={closeDeleteDialog}
+        handleConfirm={confirmDeleteContributor}
+      />
       <div className={classes.header}>
         <Typography variant="h5" component="h2">
           Aportantes
@@ -185,7 +215,7 @@ const Contributors = observer(() => {
               },
               tooltip: '',
               onClick: (event, rowData) => {
-                // Do save operation
+                openDeleteDialog(rowData);
               }
             }
           ]}

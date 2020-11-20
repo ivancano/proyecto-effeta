@@ -1,7 +1,5 @@
-import React, { useReducer, useState } from 'react';
-import { Button, FormControl, InputLabel, makeStyles, MenuItem, Modal, Select, TextField, Typography } from '@material-ui/core';
-import ContributorService from '../../services/Contributor';
-import UserService from '../../services/User';
+import React, { useReducer} from 'react';
+import { Button, FormControl, makeStyles, MenuItem, Modal, Select, TextField, Typography } from '@material-ui/core';
 
 const useStyles = makeStyles({
   root: {
