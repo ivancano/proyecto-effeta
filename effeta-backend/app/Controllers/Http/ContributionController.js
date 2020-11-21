@@ -4,6 +4,12 @@ const Contributor = use('App/Models/Contributor');
 const Contribution = use('App/Models/Contribution');
 const Payment = use('App/Models/Payment');
 
+const Env = use('Env');
+const mercadopago = require('mercadopago');
+mercadopago.configure({
+    access_token: Env.get('MP_ACCESS_TOKEN')
+});
+
 class ContributionController {
 
     async index ({ request, response }) {
@@ -47,6 +53,27 @@ class ContributionController {
         const contribution = await Contribution.find(params.id);
         await contribution.delete();
         response.json();
+    }
+
+    async getContributionDataMercadoPago({request, params, response}) {
+        const contribution = await Contribution.find(params.contributionId);
+        if(contribution !== null){
+            let preference = {
+                items: [
+                    {
+                        title: contribution.detail,
+                        unit_price: contribution.amount,
+                        quantity: 1,
+                    }
+                ]
+            };
+            const mpId = await mercadopago.preferences.create(preference);
+            response.json(mpId.body.id);
+        }
+        else {
+            response.status(400)
+            .send('Contribution not found')
+        }
     }
     
 }

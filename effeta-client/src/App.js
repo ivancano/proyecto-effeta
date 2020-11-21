@@ -11,6 +11,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import './App.css';
 import Login from "./components/login/Login";
 import Menu from "./components/contributors/Contributors";
+import MenuAportante from "./components/contributor-panel/Contributor";
 import Navbar from './components/navbar/Navbar';
 
 const useStyles = makeStyles(() => ({
@@ -32,6 +33,7 @@ function App() {
           <Container maxWidth="lg" className={classes.container}>
             <Switch>
               <Route exact path="/Menu" component={Menu}/>
+              <Route exact path="/MenuAportante" component={MenuAportante}/>
               <Route exact path="/Login" component={Login}/>
               <Route path="/" component={Login}/>
             </Switch>
