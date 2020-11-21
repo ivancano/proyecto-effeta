@@ -1,35 +1,8 @@
 import React, { useReducer } from 'react';
-import { Button, FormControl, makeStyles, MenuItem, Modal, Select, TextField, Typography } from '@material-ui/core';
+import { Button, FormControl, makeStyles, MenuItem, Select, TextField } from '@material-ui/core';
+import BasicModal from '../modals/BasicModal';
 
 const useStyles = makeStyles({
-  root: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  container: {
-    width: '80%',
-    minWidth: '320px',
-    maxWidth: '1000px',
-    backgroundColor: 'white'
-  },
-  header: {
-    padding: '15px',
-    borderBottom: 'solid 1px rgba(0, 0, 0, 0.2)'
-  },
-  body: {
-    padding: '15px',
-    borderBottom: 'solid 1px rgba(0, 0, 0, 0.2)',
-    justifyContent: 'space-around',
-    alignItems: 'space-between',
-    display: 'flex',
-    flexWrap: 'wrap'
-  },
-  buttonsContainer: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-    padding: '30px',
-  },
   inputsContainer: {
     display: 'flex',
     width: '100%'
@@ -107,49 +80,44 @@ const NewContributorModal = ({open, onClose, onAddMember}) => {
   }
 
   return (
-    <Modal
+    <BasicModal
       open={open}
       onClose={handleClose}
-      className={classes.root}
+      title="Nuevo Aportante"
     >
-      <section className={classes.container}>
-        <Typography variant="h5" component="h2" className={classes.header}>
-          Nuevo Aportante
-        </Typography>
-        <div className={classes.body}>
-          <div className={classes.inputsContainer}>
-            <TextField id="name" label="Nombre" value={state.name} onChange={onInputChange} variant="outlined" className={classes.input} />
-            <TextField id="lastname" label="Apellido" value={state.lastname} onChange={onInputChange} variant="outlined" className={classes.input} />
-          </div>
-          <div className={classes.inputsContainer}>
-            <TextField id="address" label="Dirección" value={state.address} onChange={onInputChange} variant="outlined" className={classes.input} />
-            <TextField id="email" label="Email" value={state.email} onChange={onInputChange} variant="outlined" className={classes.input} />
-          </div>
-          <div className={classes.inputsContainer}>
-            <TextField id="phone" label="Teléfono" value={state.phone} onChange={onInputChange} variant="outlined" className={classes.input} />
-            <TextField id="dni" label="DNI" value={state.dni} onChange={onInputChange} variant="outlined" className={classes.input} />
-          </div>
-          <FormControl variant="outlined" className={classes.inputsContainer}>
-            <Select
-              labelId="type-select-label"
-              id="type-simple-select"
-              value={state.type}
-              onChange={onSelection}
-              label="Tipo"
-              className={classes.input}
-            >
-              <MenuItem value={1}>Padrino</MenuItem>
-              <MenuItem value={2}>Alumno</MenuItem>
-              <MenuItem value={3}>No registrado</MenuItem>
-            </Select>
-          </FormControl>
+      <div className="modal-body">
+        <div className={classes.inputsContainer}>
+          <TextField id="name" label="Nombre" value={state.name} onChange={onInputChange} variant="outlined" className={classes.input} />
+          <TextField id="lastname" label="Apellido" value={state.lastname} onChange={onInputChange} variant="outlined" className={classes.input} />
         </div>
-        <div className={classes.buttonsContainer}>
-          <Button variant="contained" color="primary" onClick={addMember}>Guardar</Button>
-          <Button onClick={onClose}>Cancelar</Button>
+        <div className={classes.inputsContainer}>
+          <TextField id="address" label="Dirección" value={state.address} onChange={onInputChange} variant="outlined" className={classes.input} />
+          <TextField id="email" label="Email" value={state.email} onChange={onInputChange} variant="outlined" className={classes.input} />
         </div>
-      </section>
-    </Modal>
+        <div className={classes.inputsContainer}>
+          <TextField id="phone" label="Teléfono" value={state.phone} onChange={onInputChange} variant="outlined" className={classes.input} />
+          <TextField id="dni" label="DNI" value={state.dni} onChange={onInputChange} variant="outlined" className={classes.input} />
+        </div>
+        <FormControl variant="outlined" className={classes.inputsContainer}>
+          <Select
+            labelId="type-select-label"
+            id="type-simple-select"
+            value={state.type}
+            onChange={onSelection}
+            label="Tipo"
+            className={classes.input}
+          >
+            <MenuItem value={1}>Padrino</MenuItem>
+            <MenuItem value={2}>Alumno</MenuItem>
+            <MenuItem value={3}>No registrado</MenuItem>
+          </Select>
+        </FormControl>
+      </div>
+      <div className="modal-footer">
+        <Button variant="contained" color="primary" onClick={addMember}>Guardar</Button>
+        <Button onClick={onClose}>Cancelar</Button>
+      </div>
+    </BasicModal>
   );
 }
 

@@ -36,6 +36,7 @@ import UserService from '../../services/User';
 import DeleteContributorDialog from './DeleteContributorDialog';
 import ContributionsHistoryModal from '../contributions/ContributionsHistoryModal';
 import ModifyContributorModal from './ModifyContributorModal';
+import ContributorDetailModal from './ContributorDetailModal';
 
 const useStyles = makeStyles({
   header: {
@@ -53,6 +54,7 @@ const Contributors = observer(() => {
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [showContributionsModal, setShowContributionsModal] = useState(false);
   const [showModifyModal, setShowModifyModal] = useState(false);
+  const [showDetailModal, setShowDetailModal] = useState(false);
   const [selectedContributor, setSelectedContributor] = useState({});
   const classes = useStyles();
   const store = useUserStore();
@@ -111,6 +113,15 @@ const Contributors = observer(() => {
 
   function closeModifyModal() {
     setShowModifyModal(false);
+  }
+
+  function openDetailModal(contributor) {
+    setSelectedContributor(contributor);
+    setShowDetailModal(true);
+  }
+
+  function closeDetailModal() {
+    setShowDetailModal(false);
   }
 
   function confirmDeleteContributor(contributorId) {
@@ -194,6 +205,11 @@ const Contributors = observer(() => {
         contributor={selectedContributor}
         onModifyMember={modifyMember}
       />
+      <ContributorDetailModal
+        open={showDetailModal}
+        onClose={closeDetailModal}
+        contributor={selectedContributor}
+      />
       <div className={classes.header}>
         <Typography variant="h5" component="h2">
           Aportantes
@@ -233,7 +249,7 @@ const Contributors = observer(() => {
               },
               tooltip: '',
               onClick: (event, rowData) => {
-                // Do save operation
+                openDetailModal(rowData);
               }
             },
             {
