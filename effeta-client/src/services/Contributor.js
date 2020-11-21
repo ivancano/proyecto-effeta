@@ -23,6 +23,17 @@ const ContributorService = {
       });
     });
   },
+  userContributions: (contributorId) => {
+    return new Promise((resolve, reject) => {
+      axios.get(Base.url + "api/v1/contributors/" + contributorId + "/contributions")
+      .then(data => {
+        resolve(data);
+      })
+      .catch(err => {
+        reject(err);
+      });
+    });
+  },
   list: () => {
     return new Promise((resolve, reject) => {
       axios.get(Base.url + "api/v1/contributors")

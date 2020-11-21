@@ -1,5 +1,5 @@
 const contributorTypes = {
-  1: 'Aportante',
+  1: 'Padrino',
   2: 'Alumno',
   3: 'No Registrado'
 }

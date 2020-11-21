@@ -1,24 +1,7 @@
 import React, { useReducer } from 'react';
-import { Button, FormControl, makeStyles, MenuItem, Select, TextField } from '@material-ui/core';
+import { Button, FormControl, MenuItem, Select, TextField } from '@material-ui/core';
 import { useEffect } from 'react';
 import BasicModal from '../modals/BasicModal';
-
-const useStyles = makeStyles({
-  buttonsContainer: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-    padding: '30px',
-  },
-  inputsContainer: {
-    display: 'flex',
-    width: '100%'
-  },
-  input: {
-    height: '40px',
-    flex: 1,
-    margin: '20px'
-  }
-});
 
 let initialState = {
   name: '',
@@ -80,8 +63,6 @@ const ModifyContributorModal = ({open, onClose, onModifyMember, contributor}) =>
     dispatch({type: 'type', payload: e.target.value});
   }
 
-  const classes = useStyles();
-
   function handleClose() {
     clearState();
     onClose();
@@ -104,26 +85,26 @@ const ModifyContributorModal = ({open, onClose, onModifyMember, contributor}) =>
       title="Modificar Aportante"
     >
       <div className="modal-body">
-        <div className={classes.inputsContainer}>
-          <TextField id="name" label="Nombre" value={state.name} onChange={onInputChange} variant="outlined" className={classes.input} />
-          <TextField id="lastname" label="Apellido" value={state.lastname} onChange={onInputChange} variant="outlined" className={classes.input} />
+        <div className="modal-input-container">
+          <TextField id="name" label="Nombre" value={state.name} onChange={onInputChange} variant="outlined" className="modal-input" />
+          <TextField id="lastname" label="Apellido" value={state.lastname} onChange={onInputChange} variant="outlined" className="modal-input" />
         </div>
-        <div className={classes.inputsContainer}>
-          <TextField id="address" label="Dirección" value={state.address} onChange={onInputChange} variant="outlined" className={classes.input} />
-          <TextField id="email" label="Email" value={state.email} onChange={onInputChange} variant="outlined" className={classes.input} />
+        <div className="modal-input-container">
+          <TextField id="address" label="Dirección" value={state.address} onChange={onInputChange} variant="outlined" className="modal-input" />
+          <TextField id="email" label="Email" value={state.email} onChange={onInputChange} variant="outlined" className="modal-input" />
         </div>
-        <div className={classes.inputsContainer}>
-          <TextField id="phone" label="Teléfono" value={state.phone} onChange={onInputChange} variant="outlined" className={classes.input} />
-          <TextField id="dni" label="DNI" value={state.dni} onChange={onInputChange} variant="outlined" className={classes.input} />
+        <div className="modal-input-container">
+          <TextField id="phone" label="Teléfono" value={state.phone} onChange={onInputChange} variant="outlined" className="modal-input" />
+          <TextField id="dni" label="DNI" value={state.dni} onChange={onInputChange} variant="outlined" className="modal-input" />
         </div>
-        <FormControl variant="outlined" className={classes.inputsContainer}>
+        <FormControl variant="outlined" className="modal-input-container">
           <Select
             labelId="type-select-label"
             id="type-simple-select"
             value={state.type}
             onChange={onSelection}
             label="Tipo"
-            className={classes.input}
+            className="modal-input"
             defaultValue={state.type}
           >
             <MenuItem value={1}>Padrino</MenuItem>
