@@ -1,6 +1,7 @@
 'use strict'
 
 const Contributor = use('App/Models/Contributor');
+const Contribution = use('App/Models/Contribution');
 const User = use('App/Models/User');
 
 class ContributorController {
@@ -8,6 +9,11 @@ class ContributorController {
     async index ({ request, response }) {
         const contributors = await Contributor.query().with('user').fetch();
         response.json(contributors);
+    }
+
+    async getContributions ({ request, params, response }) {
+        const contributions = await Contribution.query().where('contributor_id', params.id).fetch();
+        response.json(contributions);
     }
 
     async store ({ request, response }) {

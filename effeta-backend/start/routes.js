@@ -30,6 +30,7 @@ Route.group(() => {
     Route.get('contributors/:id', 'ContributorController.show');
     Route.put('contributors/:id', 'ContributorController.update');
     Route.delete('contributors/:id', 'ContributorController.delete');
+    Route.get('contributors/:id/contributions', 'ContributorController.getContributions');
 
     Route.get('contributions', 'ContributionController.index');
     Route.post('contributions', 'ContributionController.store');
