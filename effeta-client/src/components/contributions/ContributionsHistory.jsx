@@ -23,6 +23,7 @@ const ContributionsHistory = ({contributions, isLoading}) => {
         search: true,
         actionsColumnIndex: -1
       }}
+      title=""
       columns={[
         { title: 'Monto', field: 'amount' },
         { title: 'Fecha vencimiento', field: 'due_date' },
