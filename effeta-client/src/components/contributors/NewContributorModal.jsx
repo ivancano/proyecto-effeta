@@ -45,14 +45,45 @@ const NewContributorModal = ({open, onClose, onAddMember}) => {
     dispatch({type: 'reset'});
   }
 
+  function validateFields() {
+    const { name, lastname, address, email, dni, phone } = state;
+    if (!name || name.length <= 1) {
+      alert('Campo nombre inválido');
+      return false;
+    }
+    if (!lastname || lastname.length <= 1) {
+      alert('Campo Apellido inválido');
+      return false;
+    }
+    if (!address || address.length <= 1) {
+      alert('Campo dirección inválida');
+      return false;
+    }
+    if (!email || !email.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g)) {
+      alert('Campo email inválido');
+      return false;
+    }
+    if (!dni || dni.length < 6) {
+      alert('Campo dni inválido, debe tener al menos 6 caracteres');
+      return false;
+    }
+    if (!phone || phone.length < 8) {
+      alert('Campo teléfono inválido, debe tener al menos 8 carateres')
+      return false;
+    }
+    return true;
+  }
+
   function onInputChange(e) {
     dispatch({ type: e.target.id, payload: e.target.value });
   }
 
   function addMember() {
     const { name, lastname, address, email, dni, phone, type } = state;
-    onAddMember({name, lastname, address, email, dni, phone, type});
-    clearState();
+    if (validateFields()) {
+      onAddMember({name, lastname, address, email, dni, phone, type});
+      clearState();
+    }
   }
 
   function onSelection(e) {

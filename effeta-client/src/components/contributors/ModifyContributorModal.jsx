@@ -53,10 +53,12 @@ const ModifyContributorModal = ({open, onClose, onModifyMember, contributor}) =>
   }
 
   function modifyMember() {
-    const { name, lastname, address, email, dni, phone, type } = state;
-    onModifyMember({id: contributor.id, name, lastname, address, email, dni, phone, type});
-    clearState();
-    onClose();
+    if (validateFields()) {
+      const { name, lastname, address, email, dni, phone, type } = state;
+      onModifyMember({id: contributor.id, name, lastname, address, email, dni, phone, type});
+      clearState();
+      onClose();
+    }
   }
 
   function onSelection(e) {
@@ -66,6 +68,35 @@ const ModifyContributorModal = ({open, onClose, onModifyMember, contributor}) =>
   function handleClose() {
     clearState();
     onClose();
+  }
+
+  function validateFields() {
+    const { name, lastname, address, email, dni, phone } = state;
+    if (!name || name.length <= 1) {
+      alert('Campo nombre inválido');
+      return false;
+    }
+    if (!lastname || lastname.length <= 1) {
+      alert('Campo Apellido inválido');
+      return false;
+    }
+    if (!address || address.length <= 1) {
+      alert('Campo dirección inválida');
+      return false;
+    }
+    if (!email || !email.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g)) {
+      alert('Campo email inválido');
+      return false;
+    }
+    if (!dni || dni.length < 6) {
+      alert('Campo dni inválido, debe tener al menos 6 caracteres');
+      return false;
+    }
+    if (!phone || phone.length < 8) {
+      alert('Campo teléfono inválido, debe tener al menos 8 carateres')
+      return false;
+    }
+    return true;
   }
 
   useEffect(() => {
