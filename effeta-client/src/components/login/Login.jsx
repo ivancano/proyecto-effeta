@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -6,6 +6,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import { useUserStore } from '../../context/UserContext';
 import UserService from '../../services/User';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,11 +35,13 @@ const Login = (props) => {
   const [password, setPassword] = useState('123456');
   const [remember, setRemember] = useState(false);
   const store = useUserStore();
+  const history = useHistory();
 
   const submit = () => {
     UserService.login(email, password)
-    .then(data => {
-      store.setUser({ email, password });
+    .then(res => {
+      store.setUser({ token: res.data.token });
+      window.localStorage.setItem('effeta.token', res.data.token);
       props.history.push('/Menu');
     })
     .catch(err => {
@@ -63,6 +66,12 @@ const Login = (props) => {
   const handleCheckboxChange = (event) => {
     setRemember(event.target.checked );
   }
+
+  useEffect(() => {
+    if (store.user.token) {
+      history.push('/Menu');
+    }
+  }, [history, store]);
 
   return (
     <>

@@ -9,6 +9,7 @@ export function createUserStore() {
     },
     logoutUser() {
       this.user = {};
+      window.localStorage.removeItem('effeta.token');
     },
     setMembers(loadedMembers) {
       this.members = loadedMembers;

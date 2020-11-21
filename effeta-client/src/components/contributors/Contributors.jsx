@@ -97,7 +97,6 @@ const Contributors = observer(() => {
   }
 
   function modifyMember({id, name, lastname, address, email, dni, phone, type}) {
-    console.log({id, name, lastname, address, email, dni, phone, type})
     ContributorService.update({
       id,
       name,
@@ -144,7 +143,7 @@ const Contributors = observer(() => {
       });
     }
     loadMembers()
-  }, []);
+  }, [store]);
 
   return (
     <section style={{width: '100%'}}>
