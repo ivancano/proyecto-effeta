@@ -37,7 +37,6 @@ Route.group(() => {
     Route.get('contributions/:id', 'ContributionController.show');
     Route.put('contributions/:id', 'ContributionController.update');
     Route.delete('contributions/:id', 'ContributionController.delete');
-    Route.get('contribution-data-mercado-pago/:contributionId', 'ContributionController.getContributionDataMercadoPago');
 
     Route.get('payments', 'PaymentController.index');
     Route.post('payments', 'PaymentController.store');
@@ -70,3 +69,5 @@ Route.group(() => {
         response.json(result);
     });
 }).prefix('api/v1')
+
+Route.get('contributions/:id/pay-contribution', 'ContributionController.payContribution');

@@ -55,8 +55,8 @@ class ContributionController {
         response.json();
     }
 
-    async getContributionDataMercadoPago({request, params, response}) {
-        const contribution = await Contribution.find(params.contributionId);
+    async payContribution({request, params, response, view}) {
+        const contribution = await Contribution.find(params.id);
         if(contribution !== null){
             let preference = {
                 items: [
@@ -68,7 +68,7 @@ class ContributionController {
                 ]
             };
             const mpId = await mercadopago.preferences.create(preference);
-            response.json(mpId.body.id);
+            return view.render('paycontribution', {token: mpId.body.id});
         }
         else {
             response.status(400)

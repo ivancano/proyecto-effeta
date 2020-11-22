@@ -85,12 +85,12 @@ const Contributor = observer(() => {
             { title: 'Estado', field: 'status' }
           ]}
           data={[
-            { contributor_id: 49, detail: 'test', due_date: '2020-12-01', amount: 100, status: contributionStatus[0] },
-            { contributor_id: 49, detail: 'test', due_date: '2020-12-01', amount: 100, status: contributionStatus[0] },
-            { contributor_id: 49, detail: 'test', due_date: '2020-12-01', amount: 100, status: contributionStatus[0] },
-            { contributor_id: 49, detail: 'test', due_date: '2020-12-01', amount: 100, status: contributionStatus[0] },
-            { contributor_id: 49, detail: 'test', due_date: '2020-12-01', amount: 100, status: contributionStatus[0] },
-            { contributor_id: 49, detail: 'test', due_date: '2020-12-01', amount: 100, status: contributionStatus[0] }
+            { id: 1, contributor_id: 49, detail: 'test', due_date: '2020-12-01', amount: 100, status: contributionStatus[0] },
+            { id: 1, contributor_id: 49, detail: 'test', due_date: '2020-12-01', amount: 100, status: contributionStatus[0] },
+            { id: 1, contributor_id: 49, detail: 'test', due_date: '2020-12-01', amount: 100, status: contributionStatus[0] },
+            { id: 1, contributor_id: 49, detail: 'test', due_date: '2020-12-01', amount: 100, status: contributionStatus[0] },
+            { id: 1, contributor_id: 49, detail: 'test', due_date: '2020-12-01', amount: 100, status: contributionStatus[0] },
+            { id: 1, contributor_id: 49, detail: 'test', due_date: '2020-12-01', amount: 100, status: contributionStatus[0] }
           ]}
           title=""
           options={{
@@ -106,7 +106,7 @@ const Contributor = observer(() => {
               },
               tooltip: '',
               onClick: (event, rowData) => {
-                
+                window.open('http://localhost:3333/contributions/'+rowData.id+'/pay-contribution');
               }
             }
           ]}
