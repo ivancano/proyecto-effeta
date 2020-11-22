@@ -63,10 +63,10 @@ const Navbar = observer((props) => {
           onClose={handleClose}
         >
           <MenuItem onClick={handleClose}>
-            <Link style={{textDecoration: 'none'}} to="/Contributors">Aportantes</Link>
+            <Link style={{textDecoration: 'none'}} to="/Aportantes">Aportantes</Link>
           </MenuItem>
           <MenuItem  onClick={handleClose}>
-            <Link style={{textDecoration: 'none'}} to="/Contributions">Aportes</Link>
+            <Link style={{textDecoration: 'none'}} to="/Aportes">Aportes</Link>
           </MenuItem>
         </Menu>
         <Typography variant="h6" className={classes.title}>

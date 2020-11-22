@@ -24,6 +24,7 @@ class ContributionController {
         contribution.type = body.type;
         contribution.due_date = body.due_date;
         contribution.amount = body.amount;
+        contribution.status = Contribution.STATUS_PENDING;
         await contribution.save();
 
         const contributor = await Contributor.find(body.contributor_id);

@@ -87,7 +87,7 @@ const Login = (props) => {
               color="primary"
             />
           }
-          label="Remember me"
+          label="Recordarme"
         />
         <Button variant="contained" color="primary" onClick={submit} size="large">
           Login
