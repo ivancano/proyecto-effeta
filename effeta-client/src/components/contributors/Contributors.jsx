@@ -29,10 +29,7 @@ const useStyles = makeStyles({
     display: 'flex',
     justifyContent: 'space-between',
     marginBottom: '20px',
-  },
-  table: {
-    minWidth: 650,
-  },
+  }
 });
 
 const Contributors = observer(() => {

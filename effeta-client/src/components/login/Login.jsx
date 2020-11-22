@@ -69,7 +69,7 @@ const Login = (props) => {
 
   useEffect(() => {
     if (store.user.token) {
-      history.push('/Menu');
+      history.push('/Contributors');
     }
   }, [history, store]);
 

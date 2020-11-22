@@ -10,8 +10,9 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import './App.css';
 import Login from "./components/login/Login";
-import Menu from "./components/contributors/Contributors";
+import Contributors from "./components/contributors/Contributors";
 import Navbar from './components/navbar/Navbar';
+import Contributions from "./components/contributions/Contributions";
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -31,7 +32,8 @@ function App() {
           <Navbar />
           <Container maxWidth="lg" className={classes.container}>
             <Switch>
-              <Route exact path="/Menu" component={Menu}/>
+              <Route exact path="/Contributors" component={Contributors}/>
+              <Route exact path="/Contributions" component={Contributions}/>
               <Route exact path="/Login" component={Login}/>
               <Route path="/" component={Login}/>
             </Switch>

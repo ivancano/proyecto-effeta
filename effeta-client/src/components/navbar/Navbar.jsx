@@ -8,6 +8,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import { Link, useHistory } from 'react-router-dom';
 import { observer } from 'mobx-react';
 import { useUserStore } from '../../context/UserContext';
+import { Menu, MenuItem } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,6 +26,15 @@ const Navbar = observer((props) => {
   const classes = useStyles();
   const history = useHistory();
   const store = useUserStore();
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   const logout = () => {
     store.logoutUser();
@@ -42,9 +52,23 @@ const Navbar = observer((props) => {
   return (
     <AppBar position="static" color='inherit'>
       <Toolbar>
-        <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-        <MenuIcon />
+        <IconButton onClick={handleClick} aria-controls="simple-menu" edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+          <MenuIcon />
         </IconButton>
+        <Menu
+          id="simple-menu"
+          anchorEl={anchorEl}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+        >
+          <MenuItem onClick={handleClose}>
+            <Link style={{textDecoration: 'none'}} to="/Contributors">Aportantes</Link>
+          </MenuItem>
+          <MenuItem  onClick={handleClose}>
+            <Link style={{textDecoration: 'none'}} to="/Contributions">Aportes</Link>
+          </MenuItem>
+        </Menu>
         <Typography variant="h6" className={classes.title}>
           Fundación EFFETA
         </Typography>

@@ -73,12 +73,22 @@
 .modal-input-container {
   display: flex;
   width: 100%;
+  flex-wrap: wrap;
 }
 
 .modal-input-container .modal-input {
   height: 40px;
   flex: 1;
   margin: 20px;
+}
+
+@media screen and (max-width: 600px) {
+  .modal-input-container .modal-input {
+    height: 40px;
+    width: 90%;
+    flex: none;
+    margin: 20px;
+  }
 }
 
 .modal-footer {
