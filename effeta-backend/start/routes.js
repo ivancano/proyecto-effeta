@@ -69,3 +69,5 @@ Route.group(() => {
         response.json(result);
     });
 }).prefix('api/v1')
+
+Route.get('contributions/:id/:contributor_id/pay-contribution/:callback', 'ContributionController.payContribution');

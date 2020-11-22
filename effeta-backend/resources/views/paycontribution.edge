@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <style>
+    body {
+      height: 100%;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-content: center;
+    }
+
+    .content {
+      width: 320px;
+      border-radius: 5px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 10px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    }
+
+    .info {
+      flex: 1;
+    }
+
+    .footer {
+      margin-top: 10px
+    }
+  </style>
+</head>
+<body>
+  <section class="content">
+    <h3>Pago de contribución Fundación EFFETA</h3>
+    <div class="info">Haga click en pagar para ingresar al menu de pago o en volver para ir a la pagina anterior</div>
+    <div class="footer">
+      <script
+        src="https://www.mercadopago.com.ar/integrations/v1/web-payment-checkout.js"
+        data-preference-id={{ token }}
+        >
+      </script>
+      <button class="mercadopago-button" style="background-color: lightgray; color: black;" onclick="window.location.href = '{{ callback }}'">Volver</button>
+    </div>
+  </section>
+</body>
+</html>

@@ -30,6 +30,7 @@
     "@adonisjs/validator": "^5.0.6",
     "adonis-acl": "^1.1.1",
     "chance": "^1.1.7",
+    "mercadopago": "^1.5.1",
     "mysql": "^2.18.1",
     "sqlite3": "^5.0.0"
   },
