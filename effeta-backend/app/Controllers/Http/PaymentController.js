@@ -1,6 +1,7 @@
 'use strict'
 
 const Payment = use('App/Models/Payment');
+const Contribution = use('App/Models/Contribution');
 const Env = use('Env');
 const mercadopago = require('mercadopago');
 mercadopago.configure({
@@ -20,6 +21,10 @@ class PaymentController {
         payment.source = body.source;
         payment.amount = body.amount;
         await payment.save();
+
+        const contribution = await Contribution.find(body.contribution_id);
+        contribution.payment_id = payment.id;
+        await contribution.save();
 
         response.json(payment);
     }
