@@ -1,6 +1,7 @@
 'use strict'
 
 const Payment = use('App/Models/Payment');
+const Env = use('Env');
 const mercadopago = require('mercadopago');
 mercadopago.configure({
     access_token: Env.get('MP_ACCESS_TOKEN')
