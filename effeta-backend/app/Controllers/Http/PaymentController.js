@@ -47,13 +47,16 @@ class PaymentController {
 
     async webhookMercadoPago ({ request, response }) {
         const body = request.post();
+        console.log(body);
         if(body.action === "payment.created"){
             const result = await mercadopago.payment.findById(body.data.id);
+            console.log(result);
             if(result.transaction_amount){
                 const payment = new Payment();
                 payment.source = "Mercado Pago";
                 payment.amount = data.transaction_amount;
                 await payment.save();
+                console.log(payment);
                 response.json(payment);
             }
             else {
