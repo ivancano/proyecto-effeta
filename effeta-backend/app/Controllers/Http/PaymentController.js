@@ -42,6 +42,10 @@ class PaymentController {
         response.json();
     }
 
+    async webhookMercadoPago ({ request, response }) {
+        const body = request.post();
+        response.json(body);
+    }
 }
 
 module.exports = PaymentController
