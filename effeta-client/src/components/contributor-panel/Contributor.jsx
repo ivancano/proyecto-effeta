@@ -105,7 +105,7 @@ const Contributor = observer(() => {
               onClick: (event, rowData) => {
                 const callbackLocation = encodeURIComponent(window.location.href);
                 console.log(callbackLocation)
-                window.location.href = 'http://localhost:3333/contributions/' + rowData.id + '/' + rowData.contributor_id +'/pay-contribution/' + callbackLocation;
+                window.location.href = 'http://198.199.68.226:3333/contributions/' + rowData.id + '/' + rowData.contributor_id +'/pay-contribution/' + callbackLocation;
               }
             }
           ]}

@@ -1,5 +1,5 @@
 const Base = {
-  url: 'http://127.0.0.1:3333/'
+  url: 'http://198.199.68.226:3333/'
 }
 
 export default Base;
