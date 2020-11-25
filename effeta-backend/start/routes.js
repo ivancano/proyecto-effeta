@@ -43,7 +43,7 @@ Route.group(() => {
     Route.get('payments/:id', 'PaymentController.show');
     Route.put('payments/:id', 'PaymentController.update');
     Route.delete('payments/:id', 'PaymentController.delete');
-    Route.post('payments/webbook-mercado-pago', 'PaymentController.webhookMercadoPago');
+    Route.post('payments/webbook/mercado-pago', 'PaymentController.webhookMercadoPago');
 
 
     Route.get('dummy-data', async ({ request, response }) => {
