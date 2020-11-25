@@ -24,6 +24,7 @@ class PaymentController {
 
         const contribution = await Contribution.find(body.contribution_id);
         contribution.payment_id = payment.id;
+        contribution.status = Contribution.STATUS_PAID;
         await contribution.save();
 
         response.json(payment);
