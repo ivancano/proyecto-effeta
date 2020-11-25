@@ -68,7 +68,7 @@ const Login = (props) => {
   }
 
   useEffect(() => {
-    if (store.user.token) {
+    if (store.user && store.user.token) {
       history.push('/Contributors');
     }
   }, [history, store]);

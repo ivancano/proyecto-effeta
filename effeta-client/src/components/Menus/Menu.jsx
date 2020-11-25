@@ -34,9 +34,6 @@ const Menu = () => {
       <Button variant="contained" color="primary" onClick={() => {history.push('/Aportes')}} size="large">
           Aportes
       </Button>
-      <Button variant="contained" color="primary" onClick={() => {history.push('/ResumenCuenta')}} size="large">
-          Importar resumen de cuenta
-      </Button>
     </section>
   );
 }

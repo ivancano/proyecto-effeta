@@ -2,7 +2,7 @@ const members = [];
 
 export function createUserStore() {
   return {
-    user: {},
+    user: null,
     members: members,
     setUser(user) {
       this.user = user;

@@ -55,25 +55,27 @@ const Navbar = observer((props) => {
         <IconButton onClick={handleClick} aria-controls="simple-menu" edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
           <MenuIcon />
         </IconButton>
-        <Menu
-          id="simple-menu"
-          anchorEl={anchorEl}
-          keepMounted
-          open={Boolean(anchorEl)}
-          onClose={handleClose}
-        >
-          <MenuItem onClick={handleClose}>
-            <Link style={{textDecoration: 'none'}} to="/Aportantes">Aportantes</Link>
-          </MenuItem>
-          <MenuItem  onClick={handleClose}>
-            <Link style={{textDecoration: 'none'}} to="/Aportes">Aportes</Link>
-          </MenuItem>
-        </Menu>
+        { store.user &&
+          <Menu
+            id="simple-menu"
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+          >
+            <MenuItem onClick={handleClose}>
+              <Link style={{textDecoration: 'none'}} to="/Aportantes">Aportantes</Link>
+            </MenuItem>
+            <MenuItem  onClick={handleClose}>
+              <Link style={{textDecoration: 'none'}} to="/Aportes">Aportes</Link>
+            </MenuItem>
+          </Menu>
+        }
         <Typography variant="h6" className={classes.title}>
           Fundación EFFETA
         </Typography>
-        {!store.user.token && <Link to="/Login" color="inherit">Login</Link>}
-        {store.user.token && <Link onClick={logout} to="/Login" color="inherit">Logout</Link>}
+        {store.user && !store.user.token && <Link to="/Login" color="inherit">Login</Link>}
+        {store.user && store.user.token && <Link onClick={logout} to="/Login" color="inherit">Logout</Link>}
       </Toolbar>
     </AppBar>
   );

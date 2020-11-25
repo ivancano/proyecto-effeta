@@ -59,31 +59,33 @@ const ContributionsHistory = ({contributions, isLoading}) => {
       ]}
       data={parsedContributors}
       actions={[
-        {
+        rowData => ({
           icon: () => {
             return (<IconButton color="primary" aria-label="upload picture" component="span">
                       <AttachMoneyIcon />
                     </IconButton>)
           },
           tooltip: '',
-          onClick: (event, rowData) => {
+          onClick: () => {
             setContributionSelected(rowData);
             openAddModal();
-          }
-        }, 
-        {
+          },
+          disabled: rowData.status === 'Pagado'
+        }),
+        rowData => ({
           icon: () => {
             return (<IconButton color="primary" aria-label="upload picture" component="span">
                       <PaymentIcon />
                     </IconButton>)
           },
           tooltip: '',
-          onClick: (event, rowData) => {
+          onClick: () => {
             const callbackLocation = encodeURIComponent(window.location.href);
             console.log(callbackLocation)
             window.location.href = Base.url + 'contributions/' + rowData.id + '/' + rowData.contributor_id +'/pay-contribution/' + callbackLocation;
-          }
-        }
+          },
+          disabled: rowData.status === 'Pagado'
+        })
       ]}
     />
     <AddPaymentModal open={openAdd} onClose={closeAddModal} onAdd={onAdd} contribution={contributionSelected}/>
