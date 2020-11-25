@@ -46,7 +46,6 @@ class PaymentController {
 
     async webhookMercadoPago ({ request, response }) {
         const body = request.post();
-        response.json(body);
         if(body.action === "payment.created"){
             mercadopago.payment.findById(body.data.id).then(function(data) {
                 const payment = new Payment();
