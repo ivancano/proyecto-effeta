@@ -1,6 +1,10 @@
 'use strict'
 
 const Payment = use('App/Models/Payment');
+const mercadopago = require('mercadopago');
+mercadopago.configure({
+    access_token: Env.get('MP_ACCESS_TOKEN')
+});
 
 class PaymentController {
 
@@ -14,7 +18,6 @@ class PaymentController {
         const payment = new Payment();
         payment.source = body.source;
         payment.amount = body.amount;
-        payment.source = body.source;
         await payment.save();
 
         response.json(payment);
@@ -30,7 +33,6 @@ class PaymentController {
         const payment = await Payment.find(params.id);
         payment.source = body.source;
         payment.amount = body.amount;
-        payment.source = body.source;
         await payment.save();
 
         response.json(payment);
@@ -45,6 +47,21 @@ class PaymentController {
     async webhookMercadoPago ({ request, response }) {
         const body = request.post();
         response.json(body);
+        if(body.action === "payment.created"){
+            mercadopago.payment.findById(body.data.id).then(function(data) {
+                const payment = new Payment();
+                payment.source = "Mercado Pago";
+                payment.amount = data.transaction_amount;
+                await payment.save();
+                response.json(payment);
+            }).catch(function (error) {
+                response.status(400)
+                .send('Payment not found')
+            });
+        }
+        else {
+            response.json(body);
+        }
     }
 }
 
