@@ -1,6 +1,6 @@
 module.exports = {
   apps : [{
-    name: "Effeta Backend",
+    name: "EffetaBackend",
     script: 'server.js',
     watch: '.'
   }, {
