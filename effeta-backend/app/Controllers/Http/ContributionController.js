@@ -67,6 +67,7 @@ class ContributionController {
                     pending: callback,
                     pending: callback
                 },
+                notification_url: 'http://198.199.68.226:3333/api/v1/payments/webbook/mercado-pago',
                 items: [
                     {
                         title: contribution.detail,
