@@ -55,7 +55,7 @@ const Navbar = observer((props) => {
         <IconButton onClick={handleClick} aria-controls="simple-menu" edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
           <MenuIcon />
         </IconButton>
-        { store.user &&
+        { store.user && store.user.isAdmin &&
           <Menu
             id="simple-menu"
             anchorEl={anchorEl}

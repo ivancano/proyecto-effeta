@@ -40,9 +40,17 @@ const Login = (props) => {
   const submit = () => {
     UserService.login(email, password)
     .then(res => {
-      store.setUser({ token: res.data.token });
+      store.setUser({ ...store.user, token: res.data.token });
       window.localStorage.setItem('effeta.token', res.data.token);
-      props.history.push('/Menu');
+      if (email.includes('admin')) {
+        window.localStorage.setItem('effeta.isAdmin', true);
+        store.setUser({ ...store.user, isAdmin: true });
+        props.history.push('/Menu');
+      } else {
+        window.localStorage.setItem('effeta.isAdmin', false);
+        store.setUser({ ...store.user, isAdmin: false });
+        props.history.push('/MenuAportante');
+      }
     })
     .catch(err => {
       alert(err);

@@ -77,7 +77,7 @@ const Contributor = observer(() => {
     <section style={{width: '100%'}}>
       <div className={classes.header}>
         <Typography variant="h5" component="h2">
-          Aportante: Juan Perez
+          Aportes
         </Typography>
       </div>
 
