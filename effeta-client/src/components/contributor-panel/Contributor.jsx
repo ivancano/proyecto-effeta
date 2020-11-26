@@ -26,6 +26,7 @@ import { observer } from 'mobx-react';
 import { useUserStore } from '../../context/UserContext';
 import { useEffect } from 'react';
 import contributionStatus from '../contributions/ContributionStatus';
+import ContributorService from '../../services/Contributor';
 
 const useStyles = makeStyles({
   header: {
@@ -40,6 +41,7 @@ const useStyles = makeStyles({
 
 const Contributor = observer(() => {
   const classes = useStyles();
+  const [contributions, setContributions] = useState([]);
 
   const tableIcons = {
     Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -62,7 +64,13 @@ const Contributor = observer(() => {
   };
 
   useEffect(() => {
-    
+    ContributorService.userContributions(50).then(res => {
+      const contribs = res.data.map(contribution => {
+        contribution.status = contributionStatus[contribution.status];
+        return contribution;
+      })
+      setContributions(contribs);
+    }).catch(err => alert(err));
   }, []);
 
   return (
@@ -72,7 +80,7 @@ const Contributor = observer(() => {
           Aportante: Juan Perez
         </Typography>
       </div>
-      
+
       <MaterialTable
           icons={tableIcons}
           columns={[
@@ -81,21 +89,14 @@ const Contributor = observer(() => {
             { title: 'Monto', field: 'amount' },
             { title: 'Estado', field: 'status' }
           ]}
-          data={[
-            { id: 1, contributor_id: 12, detail: 'test', due_date: '2020-12-01', amount: 100, status: contributionStatus[0] },
-            { id: 2, contributor_id: 12, detail: 'test', due_date: '2020-12-01', amount: 100, status: contributionStatus[0] },
-            { id: 1, contributor_id: 12, detail: 'test', due_date: '2020-12-01', amount: 100, status: contributionStatus[0] },
-            { id: 1, contributor_id: 12, detail: 'test', due_date: '2020-12-01', amount: 100, status: contributionStatus[0] },
-            { id: 1, contributor_id: 12, detail: 'test', due_date: '2020-12-01', amount: 100, status: contributionStatus[0] },
-            { id: 1, contributor_id: 12, detail: 'test', due_date: '2020-12-01', amount: 100, status: contributionStatus[0] }
-          ]}
+          data={contributions}
           title=""
           options={{
             search: true,
             actionsColumnIndex: -1
           }}
           actions={[
-            {
+            rowData => ({
               icon: () => {
                 return (<IconButton color="primary" aria-label="upload picture" component="span">
                           <PaymentIcon />
@@ -106,8 +107,9 @@ const Contributor = observer(() => {
                 const callbackLocation = encodeURIComponent(window.location.href);
                 console.log(callbackLocation)
                 window.location.href = 'http://198.199.68.226:3333/contributions/' + rowData.id + '/' + rowData.contributor_id +'/pay-contribution/' + callbackLocation;
-              }
-            }
+              },
+              disabled: rowData.status === 'Pagado'
+            })
           ]}
       />
     </section>

@@ -2,13 +2,13 @@ import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import { Link, useHistory } from 'react-router-dom';
 import { observer } from 'mobx-react';
 import { useUserStore } from '../../context/UserContext';
-import { Menu, MenuItem } from '@material-ui/core';
+import { Menu, MenuItem, Typography } from '@material-ui/core';
+import headerImage from '../../images/logo.png';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -51,7 +51,7 @@ const Navbar = observer((props) => {
 
   return (
     <AppBar position="static" color='inherit'>
-      <Toolbar>
+      <Toolbar style={{paddingTop: '5px', paddingBottom: '5px'}}>
         <IconButton onClick={handleClick} aria-controls="simple-menu" edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
           <MenuIcon />
         </IconButton>
@@ -71,9 +71,9 @@ const Navbar = observer((props) => {
             </MenuItem>
           </Menu>
         }
-        <Typography variant="h6" className={classes.title}>
-          Fundación EFFETA
-        </Typography>
+          <div className={classes.title}>
+            <img alt="logo" src={headerImage} style={{alignSelf: 'flex-start'}} />
+          </div>
         {store.user && !store.user.token && <Link to="/Login" color="inherit">Login</Link>}
         {store.user && store.user.token && <Link onClick={logout} to="/Login" color="inherit">Logout</Link>}
       </Toolbar>
